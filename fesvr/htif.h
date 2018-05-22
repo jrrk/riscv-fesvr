@@ -4,7 +4,6 @@
 #define __HTIF_H
 
 #include "memif.h"
-#include "syscall.h"
 #include "device.h"
 #include <string.h>
 #include <vector>
@@ -45,7 +44,6 @@ class htif_t
 
  private:
   void parse_arguments(int argc, char ** argv);
-  void register_devices();
   void usage(const char * program_name);
 
   memif_t mem;
@@ -54,22 +52,12 @@ class htif_t
   std::vector<std::string> hargs;
   std::vector<std::string> targs;
   std::string sig_file;
-  addr_t sig_addr; // torture
-  addr_t sig_len; // torture
-  addr_t tohost_addr;
-  addr_t fromhost_addr;
   int exitcode;
   bool stopped;
-
-  device_list_t device_list;
-  syscall_t syscall_proxy;
-  bcd_t bcd;
-  std::vector<device_t*> dynamic_devices;
 
   const std::vector<std::string>& target_args() { return targs; }
 
   friend class memif_t;
-  friend class syscall_t;
 };
 
 /* Alignment guide for emulator.cc options:
